@@ -44,5 +44,5 @@ event_times = poisson_process(lambd,num_files)
 file_sizes = pareto_random_samples(alpha_s,num_files)
 file_qis = pareto_random_samples(alpha_p,num_files)
 file_pis = file_qis / sum(file_pis)
-
+print(file_pis)
 exit()

@@ -11,5 +11,3 @@ def poisson_process(lamb, num_arrivals):
 		res.append(arrival_time)
 	return res
 
-
-print(poisson_process(10,20))
