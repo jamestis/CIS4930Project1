@@ -22,7 +22,6 @@ def check_inputs(args):
     for i in range(1,5):
         try:
             float(sys.argv[i])
-            print(float(sys.argv[i]))
         except ValueError:
             print("All arguments must be convertable to type float or int.")
             exit()
@@ -40,9 +39,9 @@ def check_inputs(args):
     return [lamb,num_files, alpha_s,alpha_p]
 
 lamb, num_files, alpha_s, alpha_p = [check_inputs(sys.argv)[i] for i in(0,1,2,3)]
-event_times = poisson_process(lambd,num_files)
-file_sizes = pareto_random_samples(alpha_s,num_files)
+event_times = poisson_process(lamb,num_files)
+file_sizes = pareto_random_samples(alpha_s,int(num_files))
 file_qis = pareto_random_samples(alpha_p,num_files)
-file_pis = file_qis / sum(file_pis)
+file_pis = file_qis / numpy.sum(file_qis)
 print(file_pis)
 exit()
