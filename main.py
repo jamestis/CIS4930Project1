@@ -7,12 +7,14 @@
 import sys
 import os
 import numpy
-import pareto_random_samples
+from pareto_random_samples import pareto_random_samples
+from poisson_process import poisson_process
 import Event
 
 
 #input validation
 #order is: lambda, num_files, mu_s, k_s, mu_p, k_p
+#FIXME: Number of reqs?
 def check_inputs(args):
     if len(sys.argv) != 5:
         print("Program requires 4 command line arguments: lambda, number of files, alpha_s, alpha_p")
@@ -37,5 +39,10 @@ def check_inputs(args):
         exit()
     return [lamb,num_files, alpha_s,alpha_p]
 
-check_inputs(sys.argv)
+lamb, num_files, alpha_s, alpha_p = [check_inputs(sys.argv)[i] for i in(0,1,2,3)]
+event_times = poisson_process(lambd,num_files)
+file_sizes = pareto_random_samples(alpha_s,num_files)
+file_qis = pareto_random_samples(alpha_p,num_files)
+file_pis = file_qis / sum(file_pis)
+
 exit()
