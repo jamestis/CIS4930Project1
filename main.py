@@ -5,40 +5,37 @@
 #outputs = avg rtt
 
 import sys
+import os
 import numpy
-#contains event information
-class Event:
-    def __init__(self, arrival_time, size, id,):
-        self.arrival_time = arrival_time
-        self.size = size
-        self.id = id
+import pareto_random_samples
+import Event
+
 
 #input validation
+#order is: lambda, num_files, mu_s, k_s, mu_p, k_p
 def check_inputs(args):
-    if len(sys.argv) != 7:
-        print("Program requires 6 command line arguments")
+    if len(sys.argv) != 5:
+        print("Program requires 4 command line arguments: lambda, number of files, alpha_s, alpha_p")
         exit()
-    for i in range(1,7):
+    for i in range(1,5):
         try:
             float(sys.argv[i])
             print(float(sys.argv[i]))
         except ValueError:
-            print("All arguments must be convertable to type float.")
+            print("All arguments must be convertable to type float or int.")
             exit()
 
     lamb = float(sys.argv[1])
     num_files = int(sys.argv[2])
-    mu_s = float(sys.argv[3])
-    if not (mu_s > 1):
-        print("mu_s must be greater than 1.")
+    alpha_s = float(sys.argv[3])
+    if alpha_s <= 1:
+        print("Alpha_s must be greater than 1.")
         exit()
-    k_s = float(sys.argv[4])
-    mu_p = float(sys.argv[5])
-    if not (mu_p > 1):
-        print("mu_p must be greater than 1.")
+    alpha_p = float(sys.argv[4])
+    if alpha_p <=1 :
+        print("Alpha_p must be greater than 1.")
         exit()
-    k_p = float(sys.argv[6])
-    return [lamb,num_files, mu_s, k_s, mu_p, k_p]
+    return [lamb,num_files, alpha_s,alpha_p]
 
-
+check_inputs(sys.argv)
 exit()
