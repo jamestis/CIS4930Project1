@@ -7,8 +7,8 @@
 
 
 #TODO: 
-# 1. Add event finished to event object
-# 2. Add policy enumeration to event class to support differemt cache policy operator overloading
+# 1. Parameterize DS used for caching so we do not need multiple objects, or inherit
+# 2. Add policy enumeration to event class to support differemt cache policy oroperator overloading
 # 3. More in depth exploring of cache replacement policies, possible change in splay-tree data structure
 # 4. Double check validity of poisson process generation and pareto dist. sampling 
 # 5. When looping through events, bet sure to skip to the maxmium(next_event.time, current_time + event.service_time)

@@ -35,11 +35,9 @@ for time in event_times:
     event_list.append(Event(time, file_size, file_id))
 
 
-
+print(event_list[0])
 cache_used = 0
 tree = Tree()
-
-R_a = 15
 #for event in event_list:
     #if found in cache
     #time = Si/Ra
@@ -65,8 +63,10 @@ R_a = 15
                     #GROUP FILE_ID = 3 - > (4,3)
 
                 #delete the file with the smallest maximum time
-        ## MRU
 
+        ## least popular
+
+        ##
         ## CLEAR CACHE PERIODICALLY
 
         
