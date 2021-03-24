@@ -8,7 +8,7 @@ MRU cache algorithms have more hits than LRU due to their tendency to retain old
 
 3.Random replacement
 Randomly selects a candidate item and discards it to make space when necessary. This algorithm does not require keeping any information about the access history.
-It admits efficient stochastic simulation.
+It admits efficient stochastic simulation. we can use it as test benchmark.
 
 4.Largest First/Smallest first
 Discards the Largest size used items first/Discards the Smallest size used items first
