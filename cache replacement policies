@@ -1,0 +1,14 @@
+1.Least recently used (LRU)
+Discards the least recently used items first. This algorithm requires keeping track of what was used when
+python code reference:https://www.geeksforgeeks.org/lru-cache-in-python-using-ordereddict/
+
+1. Most recently used (MRU)
+Discards the most recently used items first. When a file is being repeatedly scanned in a [Looping Sequential] reference pattern, MRU is the best replacement algorithm.
+MRU cache algorithms have more hits than LRU due to their tendency to retain older data
+
+3.Random replacement
+Randomly selects a candidate item and discards it to make space when necessary. This algorithm does not require keeping any information about the access history.
+It admits efficient stochastic simulation. we can use it as test benchmark.
+
+4.Largest First/Smallest first
+Discards the Largest size used items first/Discards the Smallest size used items first
