@@ -15,7 +15,7 @@ from splay_tree import Tree
 from splay_tree import Node
 from check_inputs import check_inputs
 from LRU_Cache import LRU_Cache
-
+import matplotlib.pyplot as plt
 round_trip_prop_time = .4 #s
 R_a = 15 #MBs
 R_c = 100 #MBs
@@ -36,24 +36,28 @@ for time in event_times:
 
 
 cache = LRU_Cache(cache_capacity)
+cache_util = []
 current_time = 0
-for event in event_list:
-    #dereference array, numpy is annoying
-    file_id = event.file_id[0]
-    size = event.size[0]
-
-
-    #NOT FOUND IN CACHE
-    if cache.search(file_id) == -1:
-        print("File id {} not found in cache. Inserting...".format(str(file_id)))
-        cache.put(file_id,size)
-        #current_time += D + ....
-        #event.finished_time = current_time
-    #FOUND IN CACHE
+for i in range(0,len(event_list)):
+    this_event = event_list[i]
+    next_event = None
+    if i != len(event_list) -1:
+        next_event = event_list[i+1]
+    if cache.search(this_event.file_id[0]) == -1:
+        print("File with id {} not found in cache...inserting".format(str(this_event.file_id[0])))
+        cache.put(this_event.file_id[0], this_event.size[0])
+        this_event.finish_time = current_time + round_trip_prop_time + this_event.size[0] / R_c + this_event.size[0] / R_a
+        if next_event:
+            current_time = max(this_event.finish_time,next_event.arrival_time)
+        else:
+            current_time = this_event.finish_time
     else:
-        print("File with id {} found in cache... Retreiving".format(str(file_id)))
-        #current_time += event.size / R_c
-        #event.finished_time = current_time
-         
-
+        print ("File with id {} found in cache... retreiving".format(str(this_event.file_id[0])))
+        this_event.finish_time = current_time + this_event.size[0] / R_c
+        if next_event:
+            current_time = max(this_event.finish_time,next_event.arrival_time)
+        else:
+            current_time = this_event.finish_time
+    print("CT: {} s".format(str(current_time)))
+    print(this_event)
 exit()
