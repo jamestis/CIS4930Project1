@@ -14,7 +14,7 @@ import queue as Q
 from splay_tree import Tree
 from splay_tree import Node
 from check_inputs import check_inputs
-
+from LRU_Cache import LRU_Cache
 
 round_trip_prop_time = .4 #s
 R_a = 15 #MBs
@@ -35,50 +35,25 @@ for time in event_times:
     event_list.append(Event(time, file_size, file_id))
 
 
-print(event_list[0])
-cache_used = 0
-tree = Tree()
-#for event in event_list:
-    #if found in cache
-    #time = Si/Ra
-
-    #if not found in cache
-
-        ## FILE SIZE POLICY : largest goes:
-            #while cache_used + event.file_size > cache_capacity:
-                #gone = tree.delete_maximum()
-                #cache_used -= gone.file_size
-        ## FILE SIZE POLICY: smalled goes:
-            #while cache_used + event.file_size > cache_capacity:
-                #gone = tree.delete_minimum()
-                #cache_used -= gone.file_size
-
-        ## FILE SIZE POLICY: LRU:
-            #for each file_id in cache:
-                #(TUPLES OF : ARRIVAL, ID)
-                    #(0,0), (1,2), (2,2), (3,0), (4,3)
-                    #GROUP FILE_ID = 0 - > (0,0), (3,0)
-                    #GROUP FILE_ID = 1 - > 
-                    #GROUP FILE_ID = 2 - > (1,2),(2,2)
-                    #GROUP FILE_ID = 3 - > (4,3)
-
-                #delete the file with the smallest maximum time
-
-        ## least popular
-
-        ##
-        ## CLEAR CACHE PERIODICALLY
-
-        
-    #look for what to replace:
-    #insert into cache
-    #calculate timing    
+cache = LRU_Cache(cache_capacity)
+current_time = 0
+for event in event_list:
+    #dereference array, numpy is annoying
+    file_id = event.file_id[0]
+    size = event.size[0]
 
 
-    #after all have finished: 
-    
-    #sum_of_waiting = 0
-    #for event in event list:
-        #sum_of_waiting += event.finished - event.time
-    #avg = sum_of_waiting / len(event_list)
+    #NOT FOUND IN CACHE
+    if cache.search(file_id) == -1:
+        print("File id {} not found in cache. Inserting...".format(str(file_id)))
+        cache.put(file_id,size)
+        #current_time += D + ....
+        #event.finished_time = current_time
+    #FOUND IN CACHE
+    else:
+        print("File with id {} found in cache... Retreiving".format(str(file_id)))
+        #current_time += event.size / R_c
+        #event.finished_time = current_time
+         
+
 exit()

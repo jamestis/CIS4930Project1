@@ -15,10 +15,12 @@ class Event:
         return time + size + file_id + time_sat
 
     def __lt__(self, other):
-        return self.size < other.size
+        return self.file_id < other.file_id
 
     def __gt__(self, other):
-        return self.size > other.size
+        return self.file_id> other.file_id
 
-    
+    #this is bad practice but will make using our tree much easier.
+    def __eq__(self,other):
+        return self.file_id == other.file_id
     
