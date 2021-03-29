@@ -1,10 +1,10 @@
-
-#takes parameters: lambda, number of files N, alpha_s, alpha_p, FIXME: add finish event.
-#consts: access link bandwidth Ra, round trip prop time btw network and serv D, institution network bandwidth Rc
-#in cache response time : S_i / R_c
-#not in cache = D+ Qd + Si / Ra + Si / Rc
-#outputs = avg rtt
-
+Execution instructions:
+clone this repo @ https://github.com/jamestis/CIS4930Project1.git
+cd CIS4930Project1
+install deps: pip3 install numpy scipy matplotlib
+execute: python3 main.py # # # # # # # #
+takes command line arguments in the following order: lamb,num_files, alpha_s,alpha_p, num_requests,cache_capacity,R_c,R_a
+current output: print event handling and results in the terminal.
 
 #TODO: 
 # 1. Parameterize DS used for caching so we do not need multiple objects, or inherit
