@@ -1,3 +1,4 @@
+GROUP MEMBERS: JAMES TISON, HANWEN CHEN
 Execution instructions:
 clone this repo @ https://github.com/jamestis/CIS4930Project1.git
 cd CIS4930Project1
