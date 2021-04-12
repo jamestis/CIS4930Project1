@@ -27,11 +27,10 @@ class LRU_Cache:
     def put(self, key: int, file_size: float) -> None:
         #we do the search. If it is found, it is moved to the front by the search method.
         #if it is not found, we remove from the cache until the can insert, then insert at the end.
-        if self.search(key) == -1:
-            while self.current_memory_used + file_size > self.capacity:
-                removed = self.cache.popitem(last=False)
-                print("Removing file with properties: id = {}, size = {}".format(str(removed[0]),str(removed[1])))
-                self.current_memory_used -= removed[1]
+        while self.current_memory_used + file_size > self.capacity:
+            removed = self.cache.popitem(last=False)
+            print("Removing file with properties: id = {}, size = {}".format(str(removed[0]),str(removed[1])))
+            self.current_memory_used -= removed[1]
             self.cache[key] = file_size
             self.current_memory_used += file_size
             self.cache.move_to_end(key)
