@@ -28,6 +28,7 @@ class MRU_Cache:
     def put(self, file_id: int, file_size: int) -> None:
         while self.current_memory_used + file_size > self.capacity:
             removed = self.cache.popitem(last=True)
+            print("Removing file with properties: id = {}, size = {}".format(str(removed[0]),str(removed[1])))
             self.current_memory_used -= removed[1]
         self.cache[file_id] = file_size
         self.current_memory_used += file_size
@@ -36,13 +37,3 @@ class MRU_Cache:
     def print_contents(self):
         for key in self.cache:
             print("File_id : {} , file_size: {}".format(str(key), str(self.cache.get(key))))
-
-
-if __name__ == "__main__":
-    c = MRU_Cache(10)
-    c.put(5,5)
-    c.put(1,2)
-    c.put(2,3)
-    print(c.search(5))
-    c.put(10,8)
-    c.print_contents()

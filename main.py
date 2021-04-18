@@ -16,7 +16,8 @@ from splay_tree import Node
 from check_inputs import check_inputs
 from LRU_Cache import LRU_Cache
 import matplotlib.pyplot as plt
-round_trip_prop_time = .4 #s
+from MRU_Cache import MRU_Cache
+round_trip_prop_time = .1 #s
 R_a = 15 #MBs
 R_c = 100 #MBs
 
@@ -35,29 +36,32 @@ for time in event_times:
     event_list.append(Event(time, file_size, file_id))
 
 
-cache = LRU_Cache(cache_capacity)
+cache = MRU_Cache(cache_capacity)
 cache_util = []
 current_time = 0
+next_event = None
 for i in range(0,len(event_list)):
-    this_event = event_list[i]
-    next_event = None
-    if i != len(event_list) -1:
-        next_event = event_list[i+1]
-    if cache.search(this_event.file_id[0]) == -1:
-        print("File with id {} not found in cache...inserting".format(str(this_event.file_id[0])))
-        cache.put(this_event.file_id[0], this_event.size[0])
-        this_event.finish_time = current_time + round_trip_prop_time + this_event.size[0] / R_c + this_event.size[0] / R_a
-        if next_event:
-            current_time = max(this_event.finish_time,next_event.arrival_time)
-        else:
-            current_time = this_event.finish_time
+
+    current_event = event_list[i]
+    if i == 0 : 
+        current_time = current_event.arrival_time
+    
+    if i == len(event_list) -1:
+        next_event = None
     else:
-        print ("File with id {} found in cache... retreiving".format(str(this_event.file_id[0])))
-        this_event.finish_time = current_time + this_event.size[0] / R_c
-        if next_event:
-            current_time = max(this_event.finish_time,next_event.arrival_time)
-        else:
-            current_time = this_event.finish_time
-    print("CT: {} s".format(str(current_time)))
-    print(this_event)
+        next_event = event_list[i+1]
+
+    if cache.search(current_event.file_id[0]) == -1:
+        cache.put(current_event.file_id[0], current_event.size[0])
+        current_event.finish_time = current_time + round_trip_prop_time + file_size / R_a + file_size / R_c
+    else:
+        current_event.finish_time = current_time + current_event.size / R_c
+
+    if next_event is not None:
+        current_time = max(current_event.finish_time, next_event.arrival_time)
+    else:
+        current_time = current_event.finish_time
+    print(current_event.arrival_time, current_event.finish_time)
+mean_turnaround_time = sum((event.finish_time - event.arrival_time) for event in event_list) / len(event_list)
+print(mean_turnaround_time)
 exit()
