@@ -75,3 +75,7 @@ def main(lamb, num_files, alpha_s, alpha_p, num_requests, cache_capacity, R_a, R
 			current_time = current_event.finish_time
 	mean_turnaround_time = sum((event.finish_time - event.arrival_time) for event in event_list) / len(event_list)
 	return mean_turnaround_time
+
+#program to call a single time:
+if __name__ == "__main__":
+	t = check_inputs(sys.argv)

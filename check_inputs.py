@@ -3,8 +3,8 @@
 import sys
 #FIXME: Number of reqs?
 def check_inputs(args):
-    if len(sys.argv) != 9:
-        print("Program requires 8 command line arguments: lambda, number of files, alpha_s, alpha_p, num_requests, cache_capacity, R_c, R_a")
+    if len(sys.argv) != 10:
+        print("Program requires 9 command line arguments: lambda, number of files, alpha_s, alpha_p, num_requests, cache_capacity, R_c, R_a, and cache type")
         exit()
     for i in range(1,9):
         try:
@@ -28,4 +28,5 @@ def check_inputs(args):
     cache_capacity = float(sys.argv[6])
     R_c = float(sys.argv[7])
     R_a = float(sys.argv[8])
-    return [lamb,num_files, alpha_s,alpha_p, num_requests,cache_capacity,R_c,R_a]
+    cache_type = str(sys.argv[8])
+    return [lamb,num_files, alpha_s,alpha_p, num_requests,cache_capacity,R_c,R_a, cache_type]
