@@ -20,7 +20,6 @@ class OrderedQueue:
             else:
                 removed = self.cache.popitem(last = True)
             self.current_memory_used -= removed[1]
-            print("Removed file with id {}".format(removed))
         self.cache[file_id] = file_size
         self.current_memory_used += file_size
     

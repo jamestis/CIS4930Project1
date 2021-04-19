@@ -30,7 +30,6 @@ class LRU_Cache:
         #our element.
         while self.current_memory_used + file_size > self.capacity:
             removed = self.cache.popitem(last=False)
-            print("Removing file with properties: id = {}, size = {}".format(str(removed[0]),str(removed[1])))
             self.current_memory_used -= removed[1]
         
         #add element to back.
