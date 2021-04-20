@@ -88,10 +88,15 @@ def test(lamb, num_files, alpha_s, alpha_p, num_requests, cache_capacity, R_c, R
 					current_time += processing_time
 		rtt = sum((event.finish_time - event.arrival_time) for event in event_list) / len(event_list)
 		print(rtt)
+		ret.append((policy, rtt))
+	return ret
 if __name__ == "__main__":
 	res = input("Type Example or Interactive: ")
 	if res == "Example":
-		test(2, 200, 1.5, 1.5, 5000, 100, 1000, 20)
+		print(test(2, 200, 1.5, 1.5, 5000, 100, 1000, 20))
+	
+	elif res == "Big Test":
+		print("Enter test")
 	else:
 		try:
 			lamb = float(input("Enter the value for lambda: "))
@@ -105,3 +110,4 @@ if __name__ == "__main__":
 			test(lamb, num_files, alpha_s, alpha_p, num_requests, cache_capacity, alpha_p, alpha_s)
 		except:
 			print("Invalid parameters")
+	
