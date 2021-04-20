@@ -26,9 +26,12 @@ class MRU_Cache:
     # ordered dictionary has exceeded our capacity,
     # If so we remove the first key (most recently used)
     def put(self, file_id: int, file_size: int) -> None:
-        while self.current_memory_used + file_size > self.capacity:
-            removed = self.cache.popitem(last=True)
-            self.current_memory_used -= removed[1]
+        while self.current_memory_used + file_size >= self.capacity:
+            try:
+                removed = self.cache.popitem(last=True)
+                self.current_memory_used -= removed[1]
+            except KeyError:
+                return
         self.cache[file_id] = file_size
         self.current_memory_used += file_size
         self.cache.move_to_end(file_id)

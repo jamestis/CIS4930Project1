@@ -13,15 +13,21 @@ class OrderedQueue:
             return self.cache[key]
 
     def put(self, file_id, file_size):
-        while self.current_memory_used + file_size > self.capcity:
-            removed = None
-            if self.FIFO:
-                removed = self.cache.popitem(last = False)
-            else:
-                removed = self.cache.popitem(last = True)
+        
+        removed = None
+        try:
+            while self.current_memory_used + file_size > self.capcity:
+                removed = None
+                if self.FIFO:
+                    removed = self.cache.popitem(last = False)
+                else:
+                    removed = self.cache.popitem(last = True)
+        except KeyError:
+            return
+        if removed is not None:
             self.current_memory_used -= removed[1]
-        self.cache[file_id] = file_size
-        self.current_memory_used += file_size
+            self.cache[file_id] = file_size
+            self.current_memory_used += file_size
     
     def print_contents(self):
         for key in self.cache:
