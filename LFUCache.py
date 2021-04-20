@@ -1,3 +1,5 @@
+#credit to user https://leetcode.com/problems/lfu-cache/discuss/1083490/Python-Solution-using-DefaultDict-and-a-Dict%3A-faster%3A77.45-Memory-usageless-88.00
+#for help
 from collections import defaultdict, OrderedDict
 
 
