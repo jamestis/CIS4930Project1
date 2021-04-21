@@ -17,7 +17,7 @@ class LRU_Cache:
         if key not in self.cache:
             return -1
         else:
-            self.cache.move_to_end(key,last=False)
+            self.cache.move_to_end(key,last=True)
             return self.cache[key]
 
     # first, we add / update the key by conventional methods.

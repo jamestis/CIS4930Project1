@@ -115,8 +115,9 @@ if __name__ == "__main__":
 			lfu_temp = 0
 			mru_temp = 0
 			lru_temp = 0
+			default_nw = 10
 			for j in range(0,5):
-				res = test(i, 200, 1.5, 1.5, 2000, 100, 1000, 20)
+				res = test(1 + i, 200, 1.5, 1.5, 3000, 50, 1000, 20)
 				lfu_temp += res[0]
 				mru_temp += res[1]
 				lru_temp += res[2]
@@ -130,9 +131,9 @@ if __name__ == "__main__":
 			mru_vals.append(mru_temp)
 			lru_vals.append(lru_temp)
 
-		x = [1,2,3,4,5,6,7,8,9]
-		plt.title("Lambda vs MTT")
-		plt.xlabel("Lambda value")
+		x = [1.5,2,2.5,3,3.5,4,4.5,5,5.5]
+		plt.title("alpha_s vs MTT")
+		plt.xlabel("alpha_s")
 		plt.ylabel("MTT(s)")
 		plt.plot(x, lru_vals, label="LRU")
 		plt.plot(x,lfu_vals, label="LFU")
