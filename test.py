@@ -16,10 +16,12 @@ import collections
 import numpy as np
 from generate_files import generate_files
 from LFUCache import LFUCache
-
+import matplotlib.pyplot as plt
 def test(lamb, num_files, alpha_s, alpha_p, num_requests, cache_capacity, R_c, R_a):
 	round_trip_prop_time = .4 #s
-	
+	lfu_rtt = 0
+	mru_rtt = 0
+	lru_rtt = 0
 	#generate events with probabilities and timings determined from parameters. Note that events are not generated
 	#dynamically, as we can resemble the poisson process during preprocessing and account for queueing
 	#behavior in a manner that is explained later.
@@ -34,7 +36,7 @@ def test(lamb, num_files, alpha_s, alpha_p, num_requests, cache_capacity, R_c, R
 		event_list.append(Event(time, file_size, file_id))
 
 
-	policies = ["MRU", "FIFO", "LRU", "LIFO", "LFU"]
+	policies = ["MRU", "LRU", "LFU"]
 	ret = []
 	for policy in policies:
 		#reset event loop
@@ -87,16 +89,57 @@ def test(lamb, num_files, alpha_s, alpha_p, num_requests, cache_capacity, R_c, R
 						events_while_processing += 1
 					current_time += processing_time
 		rtt = sum((event.finish_time - event.arrival_time) for event in event_list) / len(event_list)
+		if policy == "LFU":
+			lfu_rtt = rtt
+		elif policy == "MRU":
+			mru_rtt = rtt
+		else:
+			lru_rtt = rtt
 		print(rtt)
-		ret.append((policy, rtt))
-	return ret
+	
+	return (lfu_rtt, mru_rtt, lru_rtt)
 if __name__ == "__main__":
 	res = input("Type Example or Interactive: ")
 	if res == "Example":
 		print(test(2, 200, 1.5, 1.5, 5000, 100, 1000, 20))
 	
 	elif res == "Big Test":
-		print("Enter test")
+		print("Begin lambda test")
+		lfu_vals = []
+		mru_vals = []
+		lru_vals = []
+		#ten data points
+		for i in range(1,10):
+			#five test of each
+			print("iteration: ",i)
+			lfu_temp = 0
+			mru_temp = 0
+			lru_temp = 0
+			for j in range(0,5):
+				res = test(i, 200, 1.5, 1.5, 2000, 100, 1000, 20)
+				lfu_temp += res[0]
+				mru_temp += res[1]
+				lru_temp += res[2]
+				print(lfu_temp)
+				print(mru_temp)
+				print(lru_temp)
+			lfu_temp = lfu_temp/5
+			mru_temp = mru_temp/5
+			lru_temp = lru_temp/5
+			lfu_vals.append(lfu_temp)
+			mru_vals.append(mru_temp)
+			lru_vals.append(lru_temp)
+
+		x = [1,2,3,4,5,6,7,8,9]
+		plt.title("Lambda vs MTT")
+		plt.xlabel("Lambda value")
+		plt.ylabel("MTT(s)")
+		plt.plot(x, lru_vals, label="LRU")
+		plt.plot(x,lfu_vals, label="LFU")
+		plt.plot(x,mru_vals, label="MRU")
+		plt.legend()
+		plt.show()
+
 	else:
 		try:
 			lamb = float(input("Enter the value for lambda: "))
