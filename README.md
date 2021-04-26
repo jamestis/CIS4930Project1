@@ -1,3 +1,5 @@
+A caching policy simulation to show the differences between policies under the same conditions. In essnesnce, requests arrive with rate lambda, while the size and distribution of files arrive with some variation of a pareto dist. I commmited over 90% of the code to this proj. 
+
 Execution instructions:
 python3 test.py
 
